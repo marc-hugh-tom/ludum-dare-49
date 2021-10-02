@@ -3,15 +3,14 @@ extends RigidBody2D
 const WALK_ACCEL = 500.0
 const WALK_DEACCEL = 500.0
 const WALK_MAX_VELOCITY = 140.0
+
 const AIR_ACCEL = 100.0
 const AIR_DEACCEL = 100.0
-const JUMP_VELOCITY = 80
+
+const JUMP_VELOCITY = 120.0
 const STOP_JUMP_FORCE = 450.0
-const MAX_SHOOT_POSE_TIME = 0.3
 const MAX_FLOOR_AIRBORNE_TIME = 0.15
 
-var anim = ""
-var siding_left = false
 var jumping = false
 var stopping_jump = false
 var airborne_time = 1e20
@@ -24,8 +23,6 @@ func _integrate_forces(s):
 	var lv = s.get_linear_velocity()
 	var step = s.get_step()
 
-	var new_siding_left = siding_left
-
 	# Get player input.
 	var move_left = Input.is_action_pressed("move_left")
 	var move_right = Input.is_action_pressed("move_right")
@@ -37,7 +34,7 @@ func _integrate_forces(s):
 
 	for x in range(s.get_contact_count()):
 		var ci = s.get_contact_local_normal(x)
-		if ci.dot(Vector2(0, -1)) > 0.6:
+		if ci.dot(Vector2(0, -1)) > 0.3:
 			found_floor = true
 			floor_index = x
 
@@ -80,11 +77,6 @@ func _integrate_forces(s):
 			jumping = true
 			stopping_jump = false
 
-		# Check siding.
-		if lv.x < 0 and move_left:
-			new_siding_left = true
-		elif lv.x > 0 and move_right:
-			new_siding_left = false
 	else:
 		# Process logic when the character is in the air.
 		if move_left and not move_right:
@@ -100,11 +92,6 @@ func _integrate_forces(s):
 			if xv < 0:
 				xv = 0
 			lv.x = sign(lv.x) * xv
-
-	# Update siding.
-	if new_siding_left != siding_left:
-		siding_left = new_siding_left
-
 
 	# Finally, apply gravity and set back the linear velocity.
 	lv += s.get_total_gravity() * step
