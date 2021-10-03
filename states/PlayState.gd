@@ -75,8 +75,11 @@ func update_score(input_score):
 	$ScoreLabel.text = str(current_score)
 
 func _process(delta):
-	$TimerLabel.text = str(round($Timer.get_time_left()))
+	update_timer()
 	update_energy(delta)
+
+func update_timer():
+	$Stopper/Sprite.material.set_shader_param("t", $Timer.get_time_left() / $Timer.get_wait_time())
 
 func update_energy(delta):
 	var magnitude = spectrum.get_magnitude_for_frequency_range(FREQ_MIN, FREQ_MAX).length()
