@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Loyalty Freak Music - Can't Stop My Feet !.mp3-1ace535f97192357e4fe65ef490965d0.mp3str"
+
+[deps]
+
+source_file="res://assets/music/Loyalty Freak Music - Can't Stop My Feet !.mp3"
+dest_files=[ "res://.import/Loyalty Freak Music - Can't Stop My Feet !.mp3-1ace535f97192357e4fe65ef490965d0.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

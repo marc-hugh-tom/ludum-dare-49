@@ -21,12 +21,19 @@ var spectrum
 var energy = 0
 var target_energy = 0
 
+onready var globals = get_tree().get_root().get_node("GlobalVariables")
+
 func _ready():
 	randomize()
 	add_detection_areas()
 	$Timer.connect("timeout", self, "detect_and_add_new_areas")
 	$Entities/PlayerRotate.connect("screen_exited", self, "spawn_new_player")
 	spectrum = AudioServer.get_bus_effect_instance(0,0)
+	load_track()
+
+func load_track():
+	$Music.stream = globals.tracks[globals.track_idx]["mp3"]
+	$Music.play()
 
 func add_detection_areas():
 	var new_angle = rand_range(-MAX_ANGLE, MAX_ANGLE)

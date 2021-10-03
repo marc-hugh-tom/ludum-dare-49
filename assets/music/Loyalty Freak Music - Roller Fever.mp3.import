@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Loyalty Freak Music - Roller Fever.mp3-7be50e8af3ee292c95afc799a477e2b0.mp3str"
+
+[deps]
+
+source_file="res://assets/music/Loyalty Freak Music - Roller Fever.mp3"
+dest_files=[ "res://.import/Loyalty Freak Music - Roller Fever.mp3-7be50e8af3ee292c95afc799a477e2b0.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
