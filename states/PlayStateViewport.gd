@@ -31,6 +31,7 @@ func _ready():
 	add_detection_areas()
 	$Timer.connect("timeout", self, "detect_and_add_new_areas")
 	$Entities/PlayerRotate.connect("screen_exited", self, "spawn_new_player")
+	$Entities/PlayerRotate.connect("play_sound", $Sound, "play_sound")
 	spectrum = AudioServer.get_bus_effect_instance(0,0)
 	load_track()
 
@@ -114,6 +115,7 @@ func spawn_new_player():
 		player.position = PLAYER_SPAWN_POINT
 		$Entities.call_deferred("add_child", player)
 		player.connect("screen_exited", self, "spawn_new_player")
+		player.connect("play_sound", $Sound, "play_sound")
 
 func show_end_menu():
 	var end_menu = get_parent().get_parent().get_node("EndMenu")
