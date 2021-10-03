@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://player/PlayerRotate.tscn" type="PackedScene" id=1]
 [ext_resource path="res://states/PlayState.gd" type="Script" id=2]
 [ext_resource path="res://assets/sprites/platform.png" type="Texture" id=3]
 [ext_resource path="res://states/DetectionAreaMask.gd" type="Script" id=4]
 [ext_resource path="res://assets/sprites/stopper.png" type="Texture" id=5]
+[ext_resource path="res://assets/fonts/aAbstractGroovy.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://stopper/StopperShader.gdshader" type="Shader" id=7]
 [ext_resource path="res://states/ViewportShader.gdshader" type="Shader" id=8]
 
@@ -13,33 +14,40 @@ shader = ExtResource( 8 )
 shader_param/brightness = 1.0
 shader_param/energy = 0.5
 
-[sub_resource type="ShaderMaterial" id=5]
+[sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 8 )
 shader_param/brightness = 0.8
 shader_param/energy = 0.5
 
-[sub_resource type="CapsuleShape2D" id=2]
+[sub_resource type="CapsuleShape2D" id=3]
 radius = 16.0
 height = 160.0
 
-[sub_resource type="ShaderMaterial" id=6]
+[sub_resource type="ShaderMaterial" id=4]
 shader = ExtResource( 7 )
 shader_param/t = 1.0
 shader_param/starting_t = 0.02
 shader_param/blue_filter = 0.5
 shader_param/fill_color = Color( 0.411765, 0.501961, 0.619608, 1 )
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id=5]
 
-[sub_resource type="CapsuleShape2D" id=4]
+[sub_resource type="CapsuleShape2D" id=6]
 radius = 12.0014
 height = 768.0
+
+[sub_resource type="DynamicFont" id=7]
+size = 32
+outline_size = 4
+outline_color = Color( 0.584314, 0.772549, 0.67451, 1 )
+use_filter = true
+font_data = ExtResource( 6 )
 
 [node name="PlayState" type="Node2D"]
 material = SubResource( 1 )
 
 [node name="MainViewport" type="ViewportContainer" parent="."]
-material = SubResource( 5 )
+material = SubResource( 2 )
 margin_right = 1024.0
 margin_bottom = 600.0
 rect_min_size = Vector2( 1024, 600 )
@@ -64,10 +72,10 @@ position = Vector2( 512, 480 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MainViewport/Viewport/Stopper"]
 rotation = -1.5708
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="MainViewport/Viewport/Stopper"]
-material = SubResource( 6 )
+material = SubResource( 4 )
 texture = ExtResource( 5 )
 
 [node name="Platform" type="Node2D" parent="MainViewport/Viewport"]
@@ -76,7 +84,7 @@ position = Vector2( 512, 304 )
 [node name="Pivot" type="StaticBody2D" parent="MainViewport/Viewport/Platform"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MainViewport/Viewport/Platform/Pivot"]
-shape = SubResource( 3 )
+shape = SubResource( 5 )
 
 [node name="Seesaw" type="RigidBody2D" parent="MainViewport/Viewport/Platform" groups=[
 "Floor",
@@ -89,7 +97,7 @@ texture = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MainViewport/Viewport/Platform/Seesaw"]
 rotation = -1.5708
-shape = SubResource( 4 )
+shape = SubResource( 6 )
 
 [node name="PinJoint2D" type="PinJoint2D" parent="MainViewport/Viewport/Platform"]
 node_a = NodePath("../Pivot")
@@ -107,10 +115,14 @@ wait_time = 6.0
 autostart = true
 
 [node name="ScoreLabel" type="Label" parent="MainViewport/Viewport"]
-margin_right = 40.0
-margin_bottom = 14.0
-rect_scale = Vector2( 6, 6 )
-text = "0"
+margin_top = 420.0
+margin_right = 1024.0
+margin_bottom = 489.0
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color = Color( 0.411765, 0.501961, 0.619608, 1 )
+text = "0
+"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
