@@ -8,7 +8,8 @@
 radius = 16.0
 height = 748.0
 
-[sub_resource type="CapsuleShape2D" id=3]
+[sub_resource type="CircleShape2D" id=3]
+radius = 25.2982
 
 [node name="PlayState" type="Node2D"]
 
@@ -18,7 +19,9 @@ position = Vector2( 512, 320 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot"]
 shape = SubResource( 1 )
 
-[node name="Seesaw" type="RigidBody2D" parent="."]
+[node name="Seesaw" type="RigidBody2D" parent="." groups=[
+"Floor",
+]]
 position = Vector2( 512, 320 )
 can_sleep = false
 
@@ -32,7 +35,7 @@ node_a = NodePath("../Pivot")
 node_b = NodePath("../Seesaw")
 
 [node name="Player" type="RigidBody2D" parent="."]
-position = Vector2( 256, 192 )
+position = Vector2( 512, 192 )
 mode = 2
 custom_integrator = true
 contacts_reported = 3

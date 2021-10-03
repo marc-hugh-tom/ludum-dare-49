@@ -30,20 +30,13 @@ func _integrate_forces(s):
 
 	# Find the floor (a contact with upwards facing collision normal).
 	var found_floor = false
-	var floor_index = -1
+	var floor_normal = null
 
 	for x in range(s.get_contact_count()):
-		var ci = s.get_contact_local_normal(x)
-		if ci.dot(Vector2(0, -1)) > 0.3:
+		var obj = s.get_contact_collider_object(x)
+		if obj.is_in_group("Floor"):
 			found_floor = true
-			floor_index = x
-
-	if found_floor:
-		airborne_time = 0.0
-	else:
-		airborne_time += step # Time it spent in the air.
-
-	var on_floor = airborne_time < MAX_FLOOR_AIRBORNE_TIME
+			floor_normal = s.get_contact_local_normal(x)
 
 	# Process jump.
 	if jumping:
@@ -56,14 +49,17 @@ func _integrate_forces(s):
 		if stopping_jump:
 			lv.y += STOP_JUMP_FORCE * step
 
-	if on_floor:
+	if found_floor:
+#		print(Vector2.UP.dot(floor_normal))
 		# Process logic when character is on floor.
 		if move_left and not move_right:
 			if lv.x > -WALK_MAX_VELOCITY:
-				lv.x -= WALK_ACCEL * step
+#				print("left: ", -floor_normal.rotated(PI/2))
+				lv -= floor_normal.rotated(PI/2) * WALK_ACCEL * step
 		elif move_right and not move_left:
 			if lv.x < WALK_MAX_VELOCITY:
-				lv.x += WALK_ACCEL * step
+#				print("right: ", floor_normal.rotated(PI/2))
+				lv += floor_normal.rotated(PI/2) * WALK_ACCEL * step
 		else:
 			var xv = abs(lv.x)
 			xv -= WALK_DEACCEL * step
