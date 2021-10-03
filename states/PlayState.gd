@@ -46,4 +46,4 @@ func update_score(input_score):
 	$ScoreLabel.text = str(current_score)
 
 func _process(delta):
-	$TimerLabel.text = str($Timer.get_time_left())
+	$TimerLabel.text = str(round($Timer.get_time_left()))
