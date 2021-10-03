@@ -8,10 +8,15 @@ const TORQUE_IMPULSE = 200.0
 const JUMP_ANGLE = PI / 16.0
 const AIR_CONTROL_IMPULSE = 1.0
 
+var game_ended = false
+
 func _ready():
 	$VisibilityNotifier2D.connect("screen_exited", self, "emit_signal", ["screen_exited"])
 
 func _physics_process(delta):
+	if game_ended:
+		return
+
 	var move_left = Input.is_action_pressed("move_left")
 	var move_right = Input.is_action_pressed("move_right")
 	var jump = Input.is_action_pressed("jump")

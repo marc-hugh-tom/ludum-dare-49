@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Loyalty Freak Music - Roller Fever.mp3-7be50e8af3ee2
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

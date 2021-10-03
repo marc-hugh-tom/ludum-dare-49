@@ -20,6 +20,7 @@ var angle = 0
 var spectrum
 var energy = 0
 var target_energy = 0
+var game_ended = false
 
 onready var globals = get_tree().get_root().get_node("GlobalVariables")
 
@@ -33,6 +34,7 @@ func _ready():
 
 func load_track():
 	$Music.stream = globals.tracks[globals.track_idx]["mp3"]
+	$Music.connect("finished", self, "show_end_menu")
 	$Music.play()
 
 func add_detection_areas():
@@ -74,16 +76,18 @@ func detect_score():
 		popup_text("GOOD", $Entities/PlayerRotate.position)
 
 func detect_and_add_new_areas():
-	detect_score()
-	add_detection_areas()
+	if not game_ended:
+		detect_score()
+		add_detection_areas()
 
 func update_score(input_score):
 	current_score += input_score
 	$ScoreLabel.text = str(current_score)
 
 func _process(delta):
-	update_timer()
-	update_energy(delta)
+	if not game_ended:
+		update_timer()
+		update_energy(delta)
 
 func update_timer():
 	$Stopper/Sprite.material.set_shader_param("t", $Timer.get_time_left() / $Timer.get_wait_time())
@@ -101,9 +105,17 @@ func popup_text(text, position):
 	popuptext.position = position
 
 func spawn_new_player():
-	var old_player = $Entities/PlayerRotate
-	old_player.queue_free()
-	var player = packed_player.instance()
-	player.position = PLAYER_SPAWN_POINT
-	$Entities.call_deferred("add_child", player)
-	player.connect("screen_exited", self, "spawn_new_player")
+	if not game_ended:
+		var old_player = $Entities/PlayerRotate
+		old_player.queue_free()
+		var player = packed_player.instance()
+		player.position = PLAYER_SPAWN_POINT
+		$Entities.call_deferred("add_child", player)
+		player.connect("screen_exited", self, "spawn_new_player")
+
+func show_end_menu():
+	var end_menu = get_parent().get_parent().get_node("EndMenu")
+	end_menu.get_node("VBoxContainer/Score").text = str(current_score)
+	end_menu.show()
+	game_ended = true
+	$Entities/PlayerRotate.game_ended = true

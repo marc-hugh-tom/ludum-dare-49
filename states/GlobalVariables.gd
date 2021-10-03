@@ -3,6 +3,10 @@ extends Node2D
 
 var tracks = [
 	{
+		"name": "test",
+		"mp3": preload("res://assets/music/test.mp3")
+	},
+	{
 		"name": "Loyalty Freak Music - Dance Robot ACTIVATE",
 		"mp3": preload("res://assets/music/Loyalty Freak Music - Dance Robot ACTIVATE.mp3")
 	},

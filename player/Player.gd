@@ -18,7 +18,6 @@ var airborne_time = 1e20
 func _ready():
 	pass # Replace with function body.
 
-
 func _integrate_forces(s):
 	var lv = s.get_linear_velocity()
 	var step = s.get_step()

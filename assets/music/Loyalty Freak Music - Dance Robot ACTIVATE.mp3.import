@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Loyalty Freak Music - Dance Robot ACTIVATE.mp3-2ed15
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Loyalty Freak Music - Can't Stop My Feet !.mp3-1ace5
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
