@@ -1,5 +1,7 @@
 extends Viewport
 
+signal quit
+
 const MAX_ANGLE = PI / 4.0
 const MIN_ANGLE_DIFF = PI / 8.0
 const N_DETECTION_AREAS = 3
@@ -119,3 +121,14 @@ func show_end_menu():
 	end_menu.show()
 	game_ended = true
 	$Entities/PlayerRotate.game_ended = true
+	end_menu.get_node("VBoxContainer/Menu").connect("button_up", self,
+		"emit_signal", ["quit"])
+	end_menu.get_node("VBoxContainer/Tweet").connect("button_up", self,
+		"tweet")
+
+func tweet():
+	var _return = OS.shell_open("http://twitter.com/share?text=" +
+		"I scored " + str(current_score) + " in Roller Disco while listening to" +
+		" Loyalty Freak Music's " + globals.tracks[globals.track_idx]["name"] + "!&url=" +
+		"https://manicmoleman.itch.io/roller-disco" +
+		"&hashtags=LD49,LDJAM,GodotEngine")

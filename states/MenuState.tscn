@@ -1,0 +1,233 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://assets/fonts/aAbstractGroovy.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/sprites/a_key.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/arrow_key.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/d_key.png" type="Texture" id=4]
+[ext_resource path="res://assets/sprites/w_key.png" type="Texture" id=5]
+[ext_resource path="res://assets/sprites/s_key.png" type="Texture" id=6]
+[ext_resource path="res://assets/fonts/InstructionsFont.tres" type="DynamicFont" id=7]
+[ext_resource path="res://states/MenuState.gd" type="Script" id=8]
+
+[sub_resource type="DynamicFont" id=13]
+size = 96
+outline_size = 4
+outline_color = Color( 0.584314, 0.772549, 0.67451, 1 )
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 32
+outline_size = 4
+outline_color = Color( 0.584314, 0.772549, 0.67451, 1 )
+use_filter = true
+extra_spacing_top = 12
+extra_spacing_bottom = 12
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.411765, 0.501961, 0.619608, 1 )
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color( 0.411765, 0.501961, 0.619608, 1 )
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.266667, 0.247059, 0.482353, 1 )
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color( 0.411765, 0.501961, 0.619608, 1 )
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 0.266667, 0.247059, 0.482353, 1 )
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color( 0.266667, 0.247059, 0.482353, 1 )
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="Theme" id=12]
+Button/colors/font_color = Color( 0.411765, 0.501961, 0.619608, 1 )
+Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+Button/colors/font_color_hover = Color( 0.411765, 0.501961, 0.619608, 1 )
+Button/colors/font_color_pressed = Color( 0.411765, 0.501961, 0.619608, 1 )
+Button/constants/hseparation = 4
+Button/fonts/font = SubResource( 8 )
+Button/styles/disabled = null
+Button/styles/focus = null
+Button/styles/hover = SubResource( 9 )
+Button/styles/normal = SubResource( 10 )
+Button/styles/pressed = SubResource( 11 )
+
+[node name="MenuState" type="Node2D"]
+script = ExtResource( 8 )
+
+[node name="Title" type="Label" parent="."]
+margin_right = 1024.0
+margin_bottom = 176.0
+custom_fonts/font = SubResource( 13 )
+custom_colors/font_color = Color( 0.266667, 0.247059, 0.482353, 1 )
+text = "Roller Disco"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 384.0
+margin_top = 176.0
+margin_right = 1000.0
+margin_bottom = 564.0
+theme = SubResource( 12 )
+custom_constants/separation = 32
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Track1" type="Button" parent="VBoxContainer"]
+use_parent_material = true
+margin_right = 616.0
+margin_bottom = 73.0
+text = "Play: Dance Robot ACTIVATE"
+
+[node name="Track2" type="Button" parent="VBoxContainer"]
+use_parent_material = true
+margin_top = 105.0
+margin_right = 616.0
+margin_bottom = 178.0
+text = "Play: Can't Stop My Feet!"
+
+[node name="Track3" type="Button" parent="VBoxContainer"]
+use_parent_material = true
+margin_top = 210.0
+margin_right = 616.0
+margin_bottom = 283.0
+text = "Play: Roller Fever"
+
+[node name="Credits" type="Button" parent="VBoxContainer"]
+use_parent_material = true
+margin_top = 315.0
+margin_right = 616.0
+margin_bottom = 388.0
+text = "Credits"
+
+[node name="Instructions" type="Node2D" parent="."]
+
+[node name="Label4" type="Label" parent="Instructions"]
+margin_left = 16.0
+margin_top = 160.0
+margin_right = 367.0
+margin_bottom = 226.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0.411765, 0.501961, 0.619608, 1 )
+text = "roll around and jump to line up the platform when the timer runs out"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label5" type="Label" parent="Instructions"]
+margin_left = 16.0
+margin_top = 240.0
+margin_right = 367.0
+margin_bottom = 306.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0.411765, 0.501961, 0.619608, 1 )
+text = "choose a music track by Loyalty Freak Music to start"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="arrow_key" type="Sprite" parent="Instructions"]
+position = Vector2( 96, 336 )
+rotation = -1.57079
+texture = ExtResource( 3 )
+
+[node name="arrow_key2" type="Sprite" parent="Instructions"]
+position = Vector2( 144, 336 )
+rotation = -4.71238
+texture = ExtResource( 3 )
+
+[node name="a_key" type="Sprite" parent="Instructions"]
+position = Vector2( 256, 336 )
+texture = ExtResource( 2 )
+
+[node name="d_key" type="Sprite" parent="Instructions"]
+position = Vector2( 304, 336 )
+texture = ExtResource( 4 )
+
+[node name="Label" type="Label" parent="Instructions"]
+margin_left = 16.0
+margin_top = 368.0
+margin_right = 367.0
+margin_bottom = 401.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0.411765, 0.501961, 0.619608, 1 )
+text = "Use left and right to roll"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="arrow_key3" type="Sprite" parent="Instructions"]
+position = Vector2( 176, 416 )
+texture = ExtResource( 3 )
+
+[node name="w_key" type="Sprite" parent="Instructions"]
+position = Vector2( 224, 416 )
+texture = ExtResource( 5 )
+
+[node name="Label2" type="Label" parent="Instructions"]
+margin_left = 16.0
+margin_top = 448.0
+margin_right = 367.0
+margin_bottom = 481.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0.411765, 0.501961, 0.619608, 1 )
+text = "use up to jump"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="s_key" type="Sprite" parent="Instructions"]
+position = Vector2( 224, 496 )
+texture = ExtResource( 6 )
+
+[node name="arrow_key4" type="Sprite" parent="Instructions"]
+position = Vector2( 176, 496 )
+rotation = -3.14159
+texture = ExtResource( 3 )
+
+[node name="Label3" type="Label" parent="Instructions"]
+margin_left = 16.0
+margin_top = 528.0
+margin_right = 367.0
+margin_bottom = 571.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0.411765, 0.501961, 0.619608, 1 )
+text = "while in the air, use down to dash downwards"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://player/PlayerRotate.tscn" type="PackedScene" id=1]
 [ext_resource path="res://states/PlayStateViewport.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://stopper/StopperShader.gdshader" type="Shader" id=7]
 [ext_resource path="res://states/ViewportShader.gdshader" type="Shader" id=8]
 [ext_resource path="res://assets/fonts/PopUpText.tres" type="DynamicFont" id=9]
+[ext_resource path="res://states/PlayStateNode.gd" type="Script" id=10]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 8 )
@@ -44,7 +45,7 @@ outline_color = Color( 0.584314, 0.772549, 0.67451, 1 )
 use_filter = true
 font_data = ExtResource( 6 )
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=14]
 size = 32
 outline_size = 4
 outline_color = Color( 0.584314, 0.772549, 0.67451, 1 )
@@ -53,7 +54,7 @@ extra_spacing_top = 12
 extra_spacing_bottom = 12
 font_data = ExtResource( 6 )
 
-[sub_resource type="StyleBoxFlat" id=9]
+[sub_resource type="StyleBoxFlat" id=15]
 bg_color = Color( 0.411765, 0.501961, 0.619608, 1 )
 border_width_left = 8
 border_width_top = 8
@@ -65,7 +66,7 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id=10]
+[sub_resource type="StyleBoxFlat" id=16]
 bg_color = Color( 0.266667, 0.247059, 0.482353, 1 )
 border_width_left = 8
 border_width_top = 8
@@ -77,7 +78,7 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id=11]
+[sub_resource type="StyleBoxFlat" id=17]
 bg_color = Color( 0.266667, 0.247059, 0.482353, 1 )
 border_width_left = 8
 border_width_top = 8
@@ -95,12 +96,12 @@ Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
 Button/colors/font_color_hover = Color( 0.411765, 0.501961, 0.619608, 1 )
 Button/colors/font_color_pressed = Color( 0.411765, 0.501961, 0.619608, 1 )
 Button/constants/hseparation = 4
-Button/fonts/font = SubResource( 8 )
+Button/fonts/font = SubResource( 14 )
 Button/styles/disabled = null
 Button/styles/focus = null
-Button/styles/hover = SubResource( 9 )
-Button/styles/normal = SubResource( 10 )
-Button/styles/pressed = SubResource( 11 )
+Button/styles/hover = SubResource( 15 )
+Button/styles/normal = SubResource( 16 )
+Button/styles/pressed = SubResource( 17 )
 
 [sub_resource type="DynamicFont" id=13]
 size = 54
@@ -111,6 +112,7 @@ font_data = ExtResource( 6 )
 
 [node name="PlayState" type="Node2D"]
 material = SubResource( 1 )
+script = ExtResource( 10 )
 
 [node name="MainViewport" type="ViewportContainer" parent="."]
 material = SubResource( 2 )
