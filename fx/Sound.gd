@@ -1,9 +1,9 @@
 extends Node2D
 
 var sound_library = {
-	"jump": ["res://assets/sounds/jump.wav", 0],
-	"thud": ["res://assets/sounds/thud.wav", 0],
-	"whoosh": ["res://assets/sounds/whoosh.wav", 0],
+	"jump": ["res://assets/sounds/jump.wav", -10],
+	"thud": ["res://assets/sounds/thud.wav", -8],
+	"whoosh": ["res://assets/sounds/whoosh.wav", -5],
 }
 
 var stream_library = {}

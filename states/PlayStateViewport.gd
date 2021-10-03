@@ -25,13 +25,14 @@ var target_energy = 0
 var game_ended = false
 
 onready var globals = get_tree().get_root().get_node("GlobalVariables")
+onready var sound = get_tree().get_root().get_node("Sound")
 
 func _ready():
 	randomize()
 	add_detection_areas()
 	$Timer.connect("timeout", self, "detect_and_add_new_areas")
 	$Entities/PlayerRotate.connect("screen_exited", self, "spawn_new_player")
-	$Entities/PlayerRotate.connect("play_sound", $Sound, "play_sound")
+	$Entities/PlayerRotate.connect("play_sound", sound, "play_sound")
 	spectrum = AudioServer.get_bus_effect_instance(0,0)
 	load_track()
 
@@ -115,7 +116,7 @@ func spawn_new_player():
 		player.position = PLAYER_SPAWN_POINT
 		$Entities.call_deferred("add_child", player)
 		player.connect("screen_exited", self, "spawn_new_player")
-		player.connect("play_sound", $Sound, "play_sound")
+		player.connect("play_sound", sound, "play_sound")
 
 func show_end_menu():
 	var end_menu = get_parent().get_parent().get_node("EndMenu")

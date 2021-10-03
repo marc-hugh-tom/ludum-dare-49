@@ -10,7 +10,6 @@
 [ext_resource path="res://states/ViewportShader.gdshader" type="Shader" id=8]
 [ext_resource path="res://assets/fonts/PopUpText.tres" type="DynamicFont" id=9]
 [ext_resource path="res://states/PlayStateNode.gd" type="Script" id=10]
-[ext_resource path="res://fx/Sound.tscn" type="PackedScene" id=11]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 8 )
@@ -197,8 +196,6 @@ __meta__ = {
 }
 
 [node name="Music" type="AudioStreamPlayer" parent="MainViewport/Viewport"]
-
-[node name="Sound" parent="MainViewport/Viewport" instance=ExtResource( 11 )]
 
 [node name="EndMenu" type="Node2D" parent="."]
 visible = false

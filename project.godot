@@ -17,6 +17,7 @@ config/icon="res://icon.png"
 [autoload]
 
 GlobalVariables="*res://states/GlobalVariables.gd"
+Sound="*res://fx/Sound.tscn"
 
 [display]
 
