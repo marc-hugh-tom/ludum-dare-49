@@ -6,6 +6,7 @@ const JUMP_IMPULSE = 100.0
 const GROUND_POUND_IMPULSE = 50.0
 const TORQUE_IMPULSE = 200.0
 const JUMP_ANGLE = PI / 16.0
+const AIR_CONTROL_IMPULSE = 1.0
 
 func _ready():
 	$VisibilityNotifier2D.connect("screen_exited", self, "emit_signal", ["screen_exited"])
@@ -35,5 +36,9 @@ func _physics_process(delta):
 			else:
 				apply_impulse(Vector2.ZERO, Vector2.UP * JUMP_IMPULSE)
 	else:
+		if move_left and not move_right:
+			apply_impulse(Vector2.ZERO, Vector2.LEFT * AIR_CONTROL_IMPULSE)
+		elif move_right and not move_left:
+			apply_impulse(Vector2.ZERO, Vector2.RIGHT * AIR_CONTROL_IMPULSE)
 		if ground_pound:
 			apply_impulse(Vector2.ZERO, Vector2.DOWN * GROUND_POUND_IMPULSE)

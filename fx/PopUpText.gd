@@ -19,8 +19,8 @@ func _ready():
 		Color(1, 1, 1, 1),
 		Color(1, 1, 1, 0),
 		TWEEN_TIME,
-		Tween.TRANS_LINEAR,
-		Tween.EASE_IN_OUT
+		Tween.TRANS_CUBIC,
+		Tween.EASE_IN
 	)
 	$Tween.connect(
 		"tween_all_completed",
