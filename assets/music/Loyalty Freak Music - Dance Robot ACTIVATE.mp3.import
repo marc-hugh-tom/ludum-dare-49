@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Loyalty Freak Music - Dance Robot ACTIVATE.mp3-2ed15eec3ade05e74f1c1cccbad2e720.mp3str"
+
+[deps]
+
+source_file="res://assets/music/Loyalty Freak Music - Dance Robot ACTIVATE.mp3"
+dest_files=[ "res://.import/Loyalty Freak Music - Dance Robot ACTIVATE.mp3-2ed15eec3ade05e74f1c1cccbad2e720.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

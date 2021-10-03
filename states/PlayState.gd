@@ -1,4 +1,4 @@
-extends Node2D
+extends Viewport
 
 const MAX_ANGLE = PI / 4.0
 const MIN_ANGLE_DIFF = PI / 8.0
@@ -6,18 +6,27 @@ const N_DETECTION_AREAS = 3
 const SCORE_MULTIPLIER = 5
 const PLAYER_SPAWN_POINT = Vector2(512, -30)
 
+const FREQ_MIN = 0.0
+const FREQ_MAX = 11050.0
+const MIN_DB = 60
+const ENERGY_SPEED = 10.0
+
 const packed_detection_area = preload("res://detection/DetectionArea.tscn")
 const packed_popuptext = preload("res://fx/PopUpText.tscn")
 const packed_player = preload("res://player/PlayerRotate.tscn")
 
 var current_score = 0
 var angle = 0
+var spectrum
+var energy = 0
+var target_energy = 0
 
 func _ready():
 	randomize()
 	add_detection_areas()
 	$Timer.connect("timeout", self, "detect_and_add_new_areas")
 	$Entities/PlayerRotate.connect("screen_exited", self, "spawn_new_player")
+	spectrum = AudioServer.get_bus_effect_instance(0,0)
 
 func add_detection_areas():
 	var new_angle = rand_range(-MAX_ANGLE, MAX_ANGLE)
@@ -67,6 +76,13 @@ func update_score(input_score):
 
 func _process(delta):
 	$TimerLabel.text = str(round($Timer.get_time_left()))
+	update_energy(delta)
+
+func update_energy(delta):
+	var magnitude = spectrum.get_magnitude_for_frequency_range(FREQ_MIN, FREQ_MAX).length()
+	target_energy = clamp((MIN_DB + linear2db(magnitude)) / MIN_DB, 0, 1)
+	energy += (target_energy-energy) * delta * ENERGY_SPEED
+	get_parent().material.set_shader_param("energy", energy)
 
 func popup_text(text, position):
 	var popuptext = packed_popuptext.instance()
@@ -75,9 +91,9 @@ func popup_text(text, position):
 	popuptext.position = position
 
 func spawn_new_player():
-	$Entities/PlayerRotate.queue_free()
-	$Entities.remove_child($Entities/PlayerRotate)
+	var old_player = $Entities/PlayerRotate
+	old_player.queue_free()
 	var player = packed_player.instance()
 	player.position = PLAYER_SPAWN_POINT
-	$Entities.add_child(player)
+	$Entities.call_deferred("add_child", player)
 	player.connect("screen_exited", self, "spawn_new_player")
