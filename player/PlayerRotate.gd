@@ -1,11 +1,14 @@
 extends RigidBody2D
 
+signal screen_exited
+
 const JUMP_IMPULSE = 100.0
 const GROUND_POUND_IMPULSE = 50.0
 const TORQUE_IMPULSE = 200.0
+const JUMP_ANGLE = PI / 16.0
 
 func _ready():
-	pass # Replace with function body.
+	$VisibilityNotifier2D.connect("screen_exited", self, "emit_signal", ["screen_exited"])
 
 func _physics_process(delta):
 	var move_left = Input.is_action_pressed("move_left")
@@ -25,7 +28,12 @@ func _physics_process(delta):
 
 	if on_floor:
 		if jump:
-			apply_impulse(Vector2.ZERO, Vector2.UP * JUMP_IMPULSE)
+			if move_left and not move_right:
+				apply_impulse(Vector2.ZERO, Vector2.UP.rotated(-JUMP_ANGLE) * JUMP_IMPULSE)
+			elif move_right and not move_left:
+				apply_impulse(Vector2.ZERO, Vector2.UP.rotated(JUMP_ANGLE) * JUMP_IMPULSE)
+			else:
+				apply_impulse(Vector2.ZERO, Vector2.UP * JUMP_IMPULSE)
 	else:
 		if ground_pound:
 			apply_impulse(Vector2.ZERO, Vector2.DOWN * GROUND_POUND_IMPULSE)
