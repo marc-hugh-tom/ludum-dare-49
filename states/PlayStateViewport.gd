@@ -63,12 +63,16 @@ func add_detection_areas():
 			area.set_i(i)
 			$DetectionAreas.add_child(area)
 	$DetectionAreaMask.update_strips($DetectionAreas.get_children())
+	for area in $DetectionAreas.get_children():
+		if is_instance_valid(area):
+			area.connect("overlap_change", self, "update_strips_max_i")
 
 func detect_score():
 	var max_i = 0
 	for area in $DetectionAreas.get_children():
 		if $Platform/Seesaw in area.get_overlapping_bodies():
 			max_i = max(max_i, area.get_i())
+		$DetectionAreas.remove_child(area)
 		area.queue_free()
 	var score = SCORE_MULTIPLIER * (N_DETECTION_AREAS - max_i)
 	update_score(score)
@@ -78,6 +82,14 @@ func detect_score():
 		popup_text("PERFECT!", $Entities/PlayerRotate.position)
 	elif max_i == 1:
 		popup_text("GOOD", $Entities/PlayerRotate.position)
+
+func update_strips_max_i():
+	if $DetectionAreas.get_child_count() == 2*N_DETECTION_AREAS+1:
+		var max_i = 0
+		for area in $DetectionAreas.get_children():
+			if area.is_overlapping():
+				max_i = max(max_i, area.get_i())
+		$DetectionAreaMask.set_max_i(max_i)
 
 func detect_and_add_new_areas():
 	if not game_ended:

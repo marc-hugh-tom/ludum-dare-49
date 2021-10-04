@@ -8,6 +8,8 @@ var colours = [
 
 var strips = []
 
+var max_i = 1e20
+
 func _ready():
 	pass
 
@@ -19,7 +21,7 @@ func _draw():
 		var i = strip["area"].get_i()
 		if i < len(colours):
 			var colour = colours[i]
-			if strip["area"].is_overlapping():
+			if i == max_i:
 				colour = "#FF" + colour
 			else:
 				colour = "#77" + colour
@@ -53,3 +55,6 @@ func update_strips(areas):
 	for area in areas:
 		if not area.is_queued_for_deletion():
 			add_strip(area)
+
+func set_max_i(input_i):
+	max_i = input_i

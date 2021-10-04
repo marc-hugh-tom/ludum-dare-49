@@ -1,5 +1,7 @@
 extends Area2D
 
+signal overlap_change
+
 var i = 0
 var overlapping = false
 
@@ -19,7 +21,9 @@ func is_overlapping():
 func body_entered_callback(body):
 	if body.is_in_group("Floor"):
 		overlapping = true
+		emit_signal("overlap_change")
 
 func body_exited_callback(body):
 	if body.is_in_group("Floor"):
 		overlapping = false
+		emit_signal("overlap_change")
