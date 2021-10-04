@@ -23,3 +23,9 @@ func play_sound(sound_str):
 	if sound_str in stream_library:
 		if not stream_library[sound_str].is_playing():
 			stream_library[sound_str].play()
+
+func play_button_hover():
+	stream_library["thud"].play()
+
+func play_button_press():
+	stream_library["jump"].play()

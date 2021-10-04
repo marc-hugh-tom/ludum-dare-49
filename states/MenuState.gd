@@ -3,8 +3,7 @@ extends Node2D
 signal start_game
 signal start_credits
 
-#onready var audio = get_tree().get_root().get_node("Audio")
-
+onready var sound = get_tree().get_root().get_node("Sound")
 onready var globals = get_tree().get_root().get_node("GlobalVariables")
 
 func _ready():
@@ -16,6 +15,9 @@ func _ready():
 		"button_up", self, "start_track3")
 	_discard = $VBoxContainer/Credits.connect(
 		"button_up", self, "start_credits")
+	for button in $VBoxContainer.get_children():
+		button.connect("mouse_entered", sound, "play_button_hover")
+		button.connect("button_up", sound, "play_button_press")
 
 func start_track1():
 	globals.track_idx = 0
@@ -30,5 +32,4 @@ func start_track3():
 	emit_signal("start_game")
 
 func start_credits():
-#	audio.play_sound("blip")
 	emit_signal("start_credits")

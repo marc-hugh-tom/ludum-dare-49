@@ -2,7 +2,7 @@ extends Node2D
 
 const play_scene = preload("res://states/PlayState.tscn")
 const menu_scene = preload("res://states/MenuState.tscn")
-#const credits_scene = preload("res://nodes/CreditsState.tscn")
+const credits_scene = preload("res://states/CreditsState.tscn")
 const scene_transition = preload("res://states/SceneTransition.tscn")
 
 
@@ -38,16 +38,16 @@ func deferred_start_menu():
 	initiate_fade_to_transparent("remove_transition_overlay")
 
 # CreditsState
-#func start_credits():
-#	if not has_node("scene_transition"):
-#		initiate_fade_to_black("deferred_start_credits")
-#
-#func deferred_start_credits():
-#	clear_scene()
-#	var credits = credits_scene.instance()
-#	credits.connect("quit", self, "start_menu")
-#	add_child(credits)
-#	initiate_fade_to_transparent("remove_transition_overlay")
+func start_credits():
+	if not has_node("scene_transition"):
+		initiate_fade_to_black("deferred_start_credits")
+
+func deferred_start_credits():
+	clear_scene()
+	var credits = credits_scene.instance()
+	credits.connect("quit", self, "start_menu")
+	add_child(credits)
+	initiate_fade_to_transparent("remove_transition_overlay")
 
 func clear_scene():
 	for child in get_children():
