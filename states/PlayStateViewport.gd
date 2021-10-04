@@ -24,6 +24,10 @@ var energy = 0
 var target_energy = 0
 var game_ended = false
 
+var attempts = 0
+var perfects = 0
+var goods = 0
+
 onready var globals = get_tree().get_root().get_node("GlobalVariables")
 onready var sound = get_tree().get_root().get_node("Sound")
 
@@ -68,6 +72,7 @@ func add_detection_areas():
 			area.connect("overlap_change", self, "update_strips_max_i")
 
 func detect_score():
+	attempts += 1
 	var max_i = 0
 	for area in $DetectionAreas.get_children():
 		if $Platform/Seesaw in area.get_overlapping_bodies():
@@ -79,8 +84,10 @@ func detect_score():
 	if score > 0:
 		popup_text(str(score), $Platform.position)
 	if max_i == 0:
+		perfects += 1
 		popup_text("PERFECT!", $Entities/PlayerRotate.position)
 	elif max_i == 1:
+		goods += 1
 		popup_text("GOOD", $Entities/PlayerRotate.position)
 
 func update_strips_max_i():
@@ -132,7 +139,13 @@ func spawn_new_player():
 
 func show_end_menu():
 	var end_menu = get_parent().get_parent().get_node("EndMenu")
+	for button_name in ["Tweet", "Menu"]:
+		end_menu.get_node("VBoxContainer/" + button_name).connect("mouse_entered", sound, "play_button_hover")
+		end_menu.get_node("VBoxContainer/" + button_name).connect("button_up", sound, "play_button_press")
 	end_menu.get_node("VBoxContainer/Score").text = str(current_score)
+	end_menu.get_node("VBoxContainer/PerfectGood").text = (
+		"you had " + str(perfects) + " perfects! and " + str(goods) +
+		" goods out of " + str(attempts) + " attempts")
 	end_menu.show()
 	game_ended = true
 	$Entities/PlayerRotate.game_ended = true
