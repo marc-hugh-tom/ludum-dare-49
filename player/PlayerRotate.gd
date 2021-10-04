@@ -3,6 +3,9 @@ extends RigidBody2D
 signal screen_exited
 signal play_sound
 
+signal jump_anim
+signal land_anim
+
 const JUMP_IMPULSE = 100.0
 const GROUND_POUND_IMPULSE = 50.0
 const TORQUE_IMPULSE = 200.0
@@ -36,6 +39,7 @@ func _physics_process(delta):
 	for obj in get_colliding_bodies():
 		if obj.is_in_group("Floor"):
 			if has_jumped:
+				emit_signal("land_anim")
 				play_sound("thud")
 			on_floor = true
 			has_jumped = false
@@ -44,6 +48,7 @@ func _physics_process(delta):
 		airborne_time = 0.0
 		if jump:
 			play_sound("jump")
+			emit_signal("jump_anim")
 			has_jumped = true
 			
 			if move_left and not move_right:

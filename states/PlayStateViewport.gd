@@ -35,8 +35,8 @@ func _ready():
 	randomize()
 	add_detection_areas()
 	$Timer.connect("timeout", self, "detect_and_add_new_areas")
-	$Entities/PlayerRotate.connect("screen_exited", self, "spawn_new_player")
-	$Entities/PlayerRotate.connect("play_sound", sound, "play_sound")
+	$Entities/PlayerRotate/PlayerRotate.connect("screen_exited", self, "spawn_new_player")
+	$Entities/PlayerRotate/PlayerRotate.connect("play_sound", sound, "play_sound")
 	spectrum = AudioServer.get_bus_effect_instance(0,0)
 	load_track()
 
@@ -85,10 +85,10 @@ func detect_score():
 		popup_text(str(score), $Platform.position)
 	if max_i == 0:
 		perfects += 1
-		popup_text("PERFECT!", $Entities/PlayerRotate.position)
+		popup_text("PERFECT!", $Entities/PlayerRotate/PlayerRotate.get_global_position())
 	elif max_i == 1:
 		goods += 1
-		popup_text("GOOD", $Entities/PlayerRotate.position)
+		popup_text("GOOD", $Entities/PlayerRotate/PlayerRotate.get_global_position())
 
 func update_strips_max_i():
 	if $DetectionAreas.get_child_count() == 2*N_DETECTION_AREAS+1:
@@ -134,8 +134,8 @@ func spawn_new_player():
 		var player = packed_player.instance()
 		player.position = PLAYER_SPAWN_POINT
 		$Entities.call_deferred("add_child", player)
-		player.connect("screen_exited", self, "spawn_new_player")
-		player.connect("play_sound", sound, "play_sound")
+		player.get_node("PlayerRotate").connect("screen_exited", self, "spawn_new_player")
+		player.get_node("PlayerRotate").connect("play_sound", sound, "play_sound")
 
 func show_end_menu():
 	var end_menu = get_parent().get_parent().get_node("EndMenu")
@@ -148,7 +148,7 @@ func show_end_menu():
 		" goods out of " + str(attempts) + " attempts")
 	end_menu.show()
 	game_ended = true
-	$Entities/PlayerRotate.game_ended = true
+	$Entities/PlayerRotate/PlayerRotate.game_ended = true
 	end_menu.get_node("VBoxContainer/Menu").connect("button_up", self,
 		"emit_signal", ["quit"])
 	end_menu.get_node("VBoxContainer/Tweet").connect("button_up", self,
