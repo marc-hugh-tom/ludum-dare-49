@@ -8,6 +8,9 @@ const GROUND_POUND_IMPULSE = 50.0
 const TORQUE_IMPULSE = 200.0
 const JUMP_ANGLE = PI / 16.0
 const AIR_CONTROL_IMPULSE = 1.0
+const MIN_AIRBORNE_TIME = 0.15
+
+var airborne_time = 1e20
 
 var game_ended = false
 var has_jumped = true # player spawns in the air
@@ -34,11 +37,11 @@ func _physics_process(delta):
 		if obj.is_in_group("Floor"):
 			if has_jumped:
 				play_sound("thud")
-
 			on_floor = true
 			has_jumped = false
 
 	if on_floor:
+		airborne_time = 0.0
 		if jump:
 			play_sound("jump")
 			has_jumped = true
@@ -50,12 +53,14 @@ func _physics_process(delta):
 			else:
 				apply_impulse(Vector2.ZERO, Vector2.UP * JUMP_IMPULSE)
 	else:
+		airborne_time += delta
 		if move_left and not move_right:
 			apply_impulse(Vector2.ZERO, Vector2.LEFT * AIR_CONTROL_IMPULSE)
 		elif move_right and not move_left:
 			apply_impulse(Vector2.ZERO, Vector2.RIGHT * AIR_CONTROL_IMPULSE)
 		if ground_pound:
-			play_sound("whoosh")
+			if airborne_time > MIN_AIRBORNE_TIME:
+				play_sound("whoosh")
 			apply_impulse(Vector2.ZERO, Vector2.DOWN * GROUND_POUND_IMPULSE)
 
 func play_sound(sound_string):

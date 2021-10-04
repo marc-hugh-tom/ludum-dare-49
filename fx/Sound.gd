@@ -21,4 +21,5 @@ func _ready():
 
 func play_sound(sound_str):
 	if sound_str in stream_library:
-		stream_library[sound_str].play()
+		if not stream_library[sound_str].is_playing():
+			stream_library[sound_str].play()
